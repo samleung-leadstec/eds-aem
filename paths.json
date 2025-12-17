@@ -1,10 +1,10 @@
 {
   "mappings": [
-    "/content/eds-site/:/",
-    "/content/eds-site/configuration:/.helix/config.json",
-    "/content/eds-site/metadata:/metadata.json"
+    "/content/eds-aem/:/",
+    "/content/eds-aem/configuration:/.helix/config.json",
+    "/content/eds-aem/metadata:/metadata.json"
   ],
   "includes": [
-    "/content/eds-site/"
+    "/content/eds-aem/"
   ]
 }
