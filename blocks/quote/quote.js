@@ -1,33 +1,33 @@
 import { html, render } from 'https://esm.sh/lit-html';
 
 export default function decorate(block) {
-  // 1. Destructure based on _quote.json fields order
-  // When multi=true, the Universal Editor does NOT necessarily group them into one row.
-  // Instead, typically in EDS/Frankin, "multi" fields often appear as multiple rows 
-  // or a list inside a row depending on the content source.
-  // BUT for a standard Block model with a multi-field at the start, 
-  // we need to be careful. The safest way is to read ALL children.
+  // 1. Analyze the DOM rows
+  // The 'classes' field in JSON is special. If it's a style toggle, EDS often applies it 
+  // directly to the block element (e.g., class="quote bg-red block").
+  // So it might NOT appear as a row in block.children.
   
   const rows = [...block.children];
-  
-  // Based on your JSON:
-  // 1. Quotes (Multi) -> Can be 1 to N rows
-  // 2. Author (Single) -> 1 Row
-  // 3. Classes (Single) -> 1 Row
-  
-  // We pop from the end because the single fields at the bottom are stable.
-  const classRow = rows.pop();
+
+  // Based on your output:
+  // Row 1: Quote
+  // Row 2: Author
+  // No Row 3 for class (it's already on the block)
+
+  // So, Author is the last row.
   const authorRow = rows.pop();
   
-  // The remaining rows are ALL quotes (since quotes is multi)
+  // All remaining rows are quotes
   const quoteRows = rows;
 
+  // 2. Extract Data
   const props = {
-    quotes: quoteRows.map(row => row.innerHTML), // Get HTML of each quote row
+    quotes: quoteRows.map(row => row.innerHTML), 
     author: authorRow?.textContent.trim(),
-    className: classRow?.textContent.trim()
+    // Check if bg-red/blue/green is in the block's class list
+    className: [...block.classList].find(c => c.startsWith('bg-')) || '' 
   };
 
+  // 3. Define Template
   const template = html`
     <div class="quote-container ${props.className}">
       <div class="quotes-list">
@@ -39,5 +39,12 @@ export default function decorate(block) {
     </div>
   `;
 
-  render(template, block);
+  // 4. Render
+  // We use replaceChildren to clear the old "rows" before rendering our new UI.
+  // However, lit-html render() needs a container. 
+  // If we render(template, block), it appends/diffs against existing children.
+  // Best practice: clear block, then render.
+  
+  block.replaceChildren(); // Clear the raw rows
+  render(template, block); // Render new content
 }
