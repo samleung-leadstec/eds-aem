@@ -28,12 +28,13 @@ function extractConfig(block) {
  * Transforms a raw DOM row into a clean data object.
  */
 function extractItemData(row) {
-  const [quoteCol, authorCol] = getRowContent(row);
+  const [quoteCol, authorCol, descCol] = getRowContent(row);
 
   return {
     sourceRow: row, // Reference to the Row (Item) for selection
     quote: quoteCol?.innerHTML || '',
-    author: authorCol?.innerHTML || ''
+    author: authorCol?.innerHTML || '',
+    desc: descCol?.innerHTML || ''
   };
 }
 
@@ -48,6 +49,7 @@ function renderTemplate(items, config) {
           <div class="quote-item-wrapper" data-index="${index}">
             <blockquote .innerHTML=${item.quote}></blockquote>
             ${item.author ? html`<cite>- <span .innerHTML=${item.author}></span></cite>` : ''}
+            ${item.desc ? html`<p .innerHTML=${item.desc}></p>` : ''}
           </div>
         `)}
       </div>
@@ -77,6 +79,7 @@ function applyInstrumentation(block, items) {
  * Main Decorator Function
  */
 export default function decorate(block) {
+  console.log('decorate quotes', block.children);
   const config = extractConfig(block);
   const items = [...block.children].map(extractItemData);
   const template = renderTemplate(items, config);

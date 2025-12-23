@@ -66,6 +66,12 @@
           "label": "Author",
           "valueType": "string[]",
           "multi": true
+        },
+        {
+          "component": "text",
+          "name": "desc",
+          "label": "Description",
+          "valueType": "string"
         }
       ]
     }
