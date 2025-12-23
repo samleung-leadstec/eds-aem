@@ -1,6 +1,7 @@
 import { html, render } from 'https://esm.sh/lit-html';
 
 export default function decorate(block) {
+    console.log('Quote Block Raw Children:', [...block.children].map(c => c.outerHTML));
   const rows = [...block.children];
 
   // 1. Extract Author (Last Row)
