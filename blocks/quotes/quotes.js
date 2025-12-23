@@ -14,20 +14,16 @@ export default function decorate(block) {
       cols = [...contentRow.children];
     }
     
-    // We want to move instrumentation from the *original* row (the direct child of block)
-    // to our new list item.
-    
     const [quoteCol, authorCol] = cols;
     
     return {
-      sourceRow: row, // Keep reference to original DOM for instrumentation
+      sourceRow: row,
       quote: quoteCol?.innerHTML || '',
       author: authorCol?.textContent.trim() || ''
     };
-  }).filter(item => item.quote || item.author);
+  }); // REMOVED .filter() to allow empty items (newly added ones)
 
   // 2. Define Template
-  // Note: We add a 'ref' class or ID to easily find these items later for instrumentation
   const template = html`
     <div class="quote-container ${className}">
       <div class="quotes-list">
@@ -46,7 +42,6 @@ export default function decorate(block) {
   render(template, block);
 
   // 4. Apply Instrumentation (Post-Render)
-  // We match the original rows to the new rendered elements
   const newItems = block.querySelectorAll('.quote-item-wrapper');
   newItems.forEach((newItem) => {
     const index = newItem.dataset.index;
