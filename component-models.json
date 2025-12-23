@@ -220,10 +220,10 @@
     "fields": [
       {
         "component": "richtext",
-        "name": "quote",
-        "value": "",
-        "label": "Quote",
-        "valueType": "string"
+        "name": "quotes",
+        "label": "Quotes",
+        "valueType": "string",
+        "multi": true
       },
       {
         "component": "text",
