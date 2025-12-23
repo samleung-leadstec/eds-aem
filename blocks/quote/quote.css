@@ -1,59 +1,64 @@
-.block.quote {
-    background-color: #ccc;
-    padding: 0 0 24px;
-    display: flex;
-    flex-direction: column;
-    margin: 1rem 0;
+.quote-container {
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: var(--light-color);
 }
 
-.block.quote blockquote {
-    margin: 16px;
-    text-indent: 0;
+/* Background variants */
+.quote.bg-red .quote-container {
+  background-color: var(--error-color, #ffebee);
+  color: #c62828;
 }
 
-.block.quote > div:last-child > div {
-    margin: 0 16px;
-    font-size: small;
-    font-style: italic;
-    position: relative;
+.quote.bg-green .quote-container {
+  background-color: var(--success-color, #e8f5e9);
+  color: #2e7d32;
 }
 
-.block.quote > div:last-child > div::after {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    height: 5px;
-    width: 30px;
-    background-color: darkgray;
-}.block.quote {
-    background-color: #ccc;
-    padding: 0 0 24px;
-    display: flex;
-    flex-direction: column;
-    margin: 1rem 0;
+.quote.bg-blue .quote-container {
+  background-color: var(--info-color, #e3f2fd);
+  color: #1565c0;
 }
 
-.block.quote blockquote {
-    margin: 16px;
-    text-indent: 0;
+/* Quotes List */
+.quotes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.block.quote > div:last-child > div {
-    margin: 0 16px;
-    font-size: small;
-    font-style: italic;
-    position: relative;
+/* Individual Quote Styling */
+.quotes-list blockquote {
+  margin: 0;
+  padding-left: 1.5rem;
+  border-left: 4px solid currentColor;
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.6;
+  opacity: 0.9;
 }
 
-.block.quote > div:last-child > div::after {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    height: 5px;
-    width: 30px;
-    background-color: darkgray;
+.quotes-list blockquote p:first-of-type {
+  margin-top: 0;
+}
+
+.quotes-list blockquote p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Author Styling */
+.quote-container cite {
+  display: block;
+  text-align: right;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.quote-container cite::before {
+  content: "— ";
 }

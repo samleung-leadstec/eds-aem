@@ -3,45 +3,31 @@ import { html, render } from 'https://esm.sh/lit-html';
 export default function decorate(block) {
   const rows = [...block.children];
 
-  // 1. Extract known single fields from the bottom
-  // (We know 'classes' is on the block, so we ignore looking for it in rows)
-  // The last row is definitely the Author.
+  // 1. Extract Author (Last Row)
   const authorRow = rows.pop();
 
-  // 2. Identify the Quotes content
-  // The remaining 'rows' are for the quotes.
-  let quotes = [];
-  
-  if (rows.length === 1) {
-    // SCENARIO A: All quotes are grouped in a single row (Common for UE multi-fields)
-    // Structure: <div> <div>Quote 1</div> <div>Quote 2</div> </div>
-    const container = rows[0];
-    if (container.children.length > 0) {
-      quotes = [...container.children].map(div => div.innerHTML);
-    } else {
-      // Fallback: Just text or single item
-      quotes = [container.innerHTML];
-    }
-  } else {
-    // SCENARIO B: Quotes are spread across multiple rows (Document-based authoring)
-    // Structure: <div>Quote 1</div> <div>Quote 2</div>
-    quotes = rows.map(row => row.innerHTML);
-  }
+  // 2. Extract Quotes (All previous rows)
+  // Handle both flat structure (doc) and nested structure (Universal Editor)
+  // Using flatMap handles both:
+  // - If row has children (UE), map those children
+  // - If row has no children (Doc), wrap row in array
+  const quotes = rows.flatMap(row => 
+    row.children.length > 0 
+      ? [...row.children].map(child => child.innerHTML) 
+      : [row.innerHTML]
+  );
 
-  const props = {
-    quotes: quotes,
-    author: authorRow?.textContent.trim(),
-    className: [...block.classList].find(c => c.startsWith('bg-')) || '' 
-  };
+  // 3. Extract Class (Already on block)
+  const className = [...block.classList].find(c => c.startsWith('bg-')) || '';
 
   const template = html`
-    <div class="quote-container ${props.className}">
+    <div class="quote-container ${className}">
       <div class="quotes-list">
-        ${props.quotes.map(quoteHtml => html`
+        ${quotes.map(quoteHtml => html`
           <blockquote .innerHTML=${quoteHtml}></blockquote>
         `)}
       </div>
-      <cite>- ${props.author}</cite>
+      ${authorRow ? html`<cite>- ${authorRow.textContent.trim()}</cite>` : ''}
     </div>
   `;
 
