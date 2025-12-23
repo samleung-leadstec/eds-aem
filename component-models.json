@@ -258,7 +258,8 @@
         "component": "text",
         "name": "author",
         "label": "Author",
-        "valueType": "string"
+        "valueType": "string[]",
+        "multi": true
       }
     ]
   }

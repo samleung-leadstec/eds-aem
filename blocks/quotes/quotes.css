@@ -70,3 +70,13 @@
 .quote-container cite::before {
   content: "— ";
 }
+
+/* Handle multi-author (P tags inside cite) */
+.quote-container cite p {
+  display: inline;
+  margin: 0;
+}
+
+.quote-container cite p:not(:last-child)::after {
+  content: ", ";
+}
