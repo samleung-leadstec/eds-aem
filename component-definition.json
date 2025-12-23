@@ -173,15 +173,15 @@
           }
         },
         {
-          "title": "Quote Item",
-          "id": "quoteitem",
+          "title": "Quote",
+          "id": "quote",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Quote Item",
-                  "model": "quoteitem"
+                  "name": "Quote",
+                  "model": "quote"
                 }
               }
             }

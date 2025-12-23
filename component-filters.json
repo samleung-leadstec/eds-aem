@@ -43,7 +43,7 @@
   {
     "id": "quotes",
     "components": [
-      "quoteitem"
+      "quote"
     ]
   }
 ]
