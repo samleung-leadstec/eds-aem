@@ -216,30 +216,19 @@
     ]
   },
   {
-    "id": "quote",
+    "id": "quotes",
     "fields": [
-      {
-        "component": "text",
-        "name": "quotes",
-        "label": "Quotes",
-        "valueType": "string",
-        "multi": true
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "author",
-        "label": "Author",
-        "value": ""
-      },
       {
         "component": "select",
         "name": "classes",
         "value": "",
         "label": "Background Color",
-        "description": "The quote background color",
         "valueType": "string",
         "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
           {
             "name": "Red",
             "value": "bg-red"
@@ -253,6 +242,23 @@
             "value": "bg-blue"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "quote-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "quote",
+        "label": "Quote Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "author",
+        "label": "Author",
+        "valueType": "string"
       }
     ]
   }

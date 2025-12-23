@@ -5,17 +5,17 @@
 }
 
 /* Background variants */
-.quote.bg-red .quote-container {
+.quotes.bg-red .quote-container {
   background-color: var(--error-color, #ffebee);
   color: #c62828;
 }
 
-.quote.bg-green .quote-container {
+.quotes.bg-green .quote-container {
   background-color: var(--success-color, #e8f5e9);
   color: #2e7d32;
 }
 
-.quote.bg-blue .quote-container {
+.quotes.bg-blue .quote-container {
   background-color: var(--info-color, #e3f2fd);
   color: #1565c0;
 }
