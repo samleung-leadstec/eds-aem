@@ -1,18 +1,20 @@
 import { html, render } from 'https://esm.sh/lit-html';
 
 export default function decorate(block) {
-  // Now, each child of the block is a "Quote Item" row
-  // Structure of each row: <div>Quote</div> <div>Author</div>
-  
+  // Map over children. Each child is a "row" corresponding to a Quote Item.
+  // Expected structure per item: <div> <div>Quote HTML</div> <div>Author Text</div> </div>
   const items = [...block.children].map(row => {
     const [quoteCol, authorCol] = row.children;
+    
+    // If a row is malformed (e.g. author accidentally deleted or empty), handle gracefully
     return {
       quote: quoteCol?.innerHTML || '',
       author: authorCol?.textContent.trim() || ''
     };
   });
 
-  // Extract Class (Already on block wrapper via UE/Metadata)
+  // Extract Class from block wrapper (Universal Editor "Styles" or "Classes" via Metadata)
+  // This supports .quotes.bg-red etc.
   const className = [...block.classList].find(c => c.startsWith('bg-')) || '';
 
   const template = html`
@@ -26,6 +28,7 @@ export default function decorate(block) {
     </div>
   `;
 
+  // Clear original rows (quote items) and render the list
   block.replaceChildren();
   render(template, block);
 }
